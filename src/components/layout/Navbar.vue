@@ -2,7 +2,7 @@
   <div class="container">
     <nav class="row px-4 px-sm-0" style="height: 84px">
       <div
-        class="col-9 col-xl-6 d-flex align-items-center px-0 justify-content-md-evenly justify-content-sm-start"
+        class="col-9 col-lg-6 d-flex align-items-center px-0 justify-content-sm-start"
       >
         <div class="d-flex align-items-center gap-3">
           <svg
@@ -36,15 +36,15 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <router-link class="dropdown-item" href="#">Action</router-link>
+                <router-link class="dropdown-item" to="/">Action</router-link>
               </li>
               <li>
-                <router-link class="dropdown-item" href="#"
+                <router-link class="dropdown-item" to="/"
                   >Another action</router-link
                 >
               </li>
               <li>
-                <router-link class="dropdown-item" href="#"
+                <router-link class="dropdown-item" to="/"
                   >Something else here</router-link
                 >
               </li>
@@ -57,10 +57,10 @@
       </div>
 
       <div
-        class="col-3 px-0 col-xl-6 d-flex align-items-center justify-content-center"
+        class="col-3 px-0 col-lg-6 d-flex align-items-center justify-content-center"
       >
         <div
-          class="search d-flex align-items-center justify-content-start gap-3 m-0 d-none d-xl-flex col-9"
+          class="search d-flex align-items-center justify-content-start gap-3 m-0 d-none d-lg-flex col-9"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -79,14 +79,14 @@
         <div
           class="d-flex align-items-center justify-content-center gap-3 m-0 col-2"
         >
-          <router-link>
+          <router-link to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
               fill="currentColor"
               viewBox="0 0 16 16"
-              class="bi bi-search text-black d-xl-none"
+              class="bi bi-search text-black d-lg-none"
             >
               <path
                 d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
@@ -156,5 +156,6 @@ ul li,
   border: none;
   background: none;
   outline: none;
+  width: 100%;
 }
 </style>
