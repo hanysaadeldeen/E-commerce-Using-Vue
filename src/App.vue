@@ -3,7 +3,7 @@ import Navbar from "./components/layout/Navbar.vue";
 </script>
 
 <template>
-  <main class="container">
+  <main>
     <Navbar />
     <router-view />
   </main>
