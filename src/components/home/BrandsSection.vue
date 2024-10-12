@@ -2,7 +2,7 @@
   <section class="Brands">
     <div class="container">
       <div
-        class="d-flex flex-wrap justify-content-evenly gap-3 align-items-center"
+        class="d-flex flex-wrap justify-content-between gap-3 align-items-center"
       >
         <h1 class="">VERSACE</h1>
         <h1 class="">ZARA</h1>

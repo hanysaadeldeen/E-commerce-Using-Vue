@@ -1,11 +1,17 @@
 <template>
   <HeaderSection />
   <BrandsSection />
+  <NewArrivals />
+  <Divider />
+  <TopSelling />
 </template>
 
 <script setup lang="ts">
 import BrandsSection from "../components/home/BrandsSection.vue";
 import HeaderSection from "../components/home/HeaderSection.vue";
+import NewArrivals from "../components/home/NewArrivals.vue";
+import TopSelling from "../components/home/TopSelling.vue";
+import Divider from "../components/util/Divider.vue";
 </script>
 
 <style scoped>

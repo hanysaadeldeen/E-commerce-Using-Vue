@@ -15,7 +15,7 @@
               <h2>200+</h2>
               <p>International Brands</p>
             </div>
-            <div class="col-6 col-md-4">
+            <div class="col-5 col-md-4">
               <h2>2,000+</h2>
               <p>High-Quality Products</p>
             </div>
@@ -56,6 +56,12 @@ button {
   text-align: center;
   margin: 15px 0 25px;
 }
+button:hover {
+  background-color: transparent;
+  color: black;
+  border: 1px solid black;
+  transition: 0.4s;
+}
 
 .status div p {
   margin: 0;
@@ -84,6 +90,7 @@ button {
 @media (max-width: 797px) {
   .status div:nth-child(2) {
     border-right: none;
+    padding-right: 0px;
   }
   .status div h2 {
     font-size: 35px;
