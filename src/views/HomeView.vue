@@ -6,7 +6,6 @@
   <TopSelling />
   <DressStyle />
   <ReviewsSection />
-  <UpToDate />
 </template>
 
 <script setup lang="ts">
@@ -17,7 +16,6 @@ import NewArrivals from "../components/home/NewArrivals.vue";
 import ReviewsSection from "../components/home/ReviewsSection.vue";
 import TopSelling from "../components/home/TopSelling.vue";
 import Divider from "../components/util/Divider.vue";
-import UpToDate from "../components/util/UpToDate.vue";
 </script>
 
 <style scoped>

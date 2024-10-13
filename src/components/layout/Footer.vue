@@ -1,7 +1,8 @@
 <template>
   <footer>
-    <div class="container">
-      <div class="row pb-4">
+    <section class="container">
+      <UpToDate />
+      <div class="row pb-4 pt-5 pt-md-0">
         <div class="col-12 mb-4 mb-md-0 m-md col-md-3 d-flex flex-column">
           <a href="#">
             <h1 class="logo">SHOP.CO</h1>
@@ -588,18 +589,25 @@
           </svg>
         </div>
       </div>
-    </div>
+    </section>
   </footer>
 </template>
 
 <script setup lang="ts">
 import Divider from "../util/Divider.vue";
+import UpToDate from "../util/UpToDate.vue";
 </script>
 
 <style scoped>
 footer {
   background: #f0f0f0;
-  padding: 70px 0 50px;
+  padding: 70px 20px 50px;
+  margin-top: 100px;
+}
+
+section {
+  position: relative;
+  padding-top: 70px;
 }
 .copy-write {
   font-size: 18px;

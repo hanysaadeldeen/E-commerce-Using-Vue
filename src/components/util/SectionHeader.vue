@@ -19,7 +19,7 @@ h1 {
   font-size: 48px;
   line-height: 1;
 }
-@media (max-width: 797px) {
+@media (max-width: 992px) {
   h1 {
     font-size: 32px;
   }

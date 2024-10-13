@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container Up-To-Date">
     <section class="row">
-      <div class="col-12 col-lg-6 text-white mb-5 mb-lg-0">
+      <div class="col-12 col-md-6 text-white mb-5 mb-lg-0">
         <SectionHeader
           title="STAY UPTO DATE ABOUT OUR LATEST OFFERS"
           position="right"
@@ -9,7 +9,7 @@
       </div>
 
       <div
-        class="col-12 col-lg-6 d-flex flex-column gap-3 justify-content-center align-items-center"
+        class="col-12 col-md-6 d-flex flex-column gap-3 justify-content-center align-items-center"
       >
         <div
           class="search d-flex align-items-center justify-content-start gap-3 m-0"
@@ -40,6 +40,12 @@ import SectionHeader from "./SectionHeader.vue";
 </script>
 
 <style scoped>
+.Up-To-Date {
+  position: absolute;
+  top: -180px;
+  left: 0;
+}
+
 section {
   background: #000000;
   border-radius: 20px;
@@ -48,6 +54,14 @@ section {
 @media (max-width: 797px) {
   section {
     padding: 20px;
+  }
+  .Up-To-Date {
+    top: -220px;
+  }
+}
+@media (max-width: 576px) {
+  .Up-To-Date {
+    top: -230px;
   }
 }
 .search {
