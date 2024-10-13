@@ -19,9 +19,9 @@ h1 {
   font-size: 48px;
   line-height: 1;
 }
-@media (max-width: 575.98px) {
+@media (max-width: 797px) {
   h1 {
-    font-size: 40px;
+    font-size: 32px;
   }
 }
 </style>

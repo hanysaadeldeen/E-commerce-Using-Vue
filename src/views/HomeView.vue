@@ -5,6 +5,8 @@
   <Divider />
   <TopSelling />
   <DressStyle />
+  <ReviewsSection />
+  <UpToDate />
 </template>
 
 <script setup lang="ts">
@@ -12,8 +14,10 @@ import BrandsSection from "../components/home/BrandsSection.vue";
 import DressStyle from "../components/home/DressStyle.vue";
 import HeaderSection from "../components/home/HeaderSection.vue";
 import NewArrivals from "../components/home/NewArrivals.vue";
+import ReviewsSection from "../components/home/ReviewsSection.vue";
 import TopSelling from "../components/home/TopSelling.vue";
 import Divider from "../components/util/Divider.vue";
+import UpToDate from "../components/util/UpToDate.vue";
 </script>
 
 <style scoped>

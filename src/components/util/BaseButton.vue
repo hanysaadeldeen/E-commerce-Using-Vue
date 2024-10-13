@@ -20,13 +20,13 @@ button {
   text-align: center;
   margin: 15px 0 25px;
   border: 1px solid #0000001a;
-  background: transparent;
+  background: white;
 }
 
 button:hover {
   background-color: black;
   color: white;
-  border: 1px solid #0000001a;
+  border: 1px solid white;
   transition: 0.4s;
 }
 

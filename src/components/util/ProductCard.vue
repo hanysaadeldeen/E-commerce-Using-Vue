@@ -13,7 +13,7 @@
           width="18"
           height="18"
           fill="currentColor"
-          class="bi bi-star-fill text-warning"
+          class="bi bi-star-fill text-warning mx-1"
           viewBox="0 0 16 16"
         >
           <path
@@ -25,7 +25,7 @@
           width="18"
           height="18"
           fill="currentColor"
-          class="bi bi-star-fill text-warning"
+          class="bi bi-star-fill text-warning mx-1"
           viewBox="0 0 16 16"
         >
           <path
@@ -37,7 +37,7 @@
           width="18"
           height="18"
           fill="currentColor"
-          class="bi bi-star-fill text-warning"
+          class="bi bi-star-fill text-warning mx-1"
           viewBox="0 0 16 16"
         >
           <path
@@ -49,7 +49,7 @@
           width="18"
           height="18"
           fill="currentColor"
-          class="bi bi-star-half text-warning"
+          class="bi bi-star-half text-warning mx-1"
           viewBox="0 0 16 16"
         >
           <path
@@ -101,9 +101,6 @@ img {
   font-weight: 600;
 }
 
-.rating svg {
-  margin: 0 2px;
-}
 .price .current,
 .price .past {
   font-family: sans-serif;
