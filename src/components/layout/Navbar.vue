@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="NavBar container">
     <nav class="row px-4 px-sm-0" style="height: 84px">
       <div
         class="col-9 col-lg-6 d-flex align-items-center px-0 justify-content-sm-start"
@@ -133,6 +133,9 @@
 <script setup lang="ts"></script>
 
 <style scoped>
+.NavBar {
+  border-bottom: 2px solid #f2f0f1;
+}
 .icons {
   display: flex;
   gap: 8px;
