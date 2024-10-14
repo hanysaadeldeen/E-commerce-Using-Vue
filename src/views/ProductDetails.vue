@@ -3,8 +3,12 @@
     <section>
       <p class="direction">Home > Shop > Men > T-shirts</p>
       <div class="product row">
-        <div class="col-12 col-lg-7"></div>
-        <div class="col-12 col-lg-5 d-flex flex-column gap-1">
+        <div class="col-12 col-md-6 mb-5">
+          <div class="img-box">
+            <img src="../assets/product1.png" alt="product1" />
+          </div>
+        </div>
+        <div class="col-12 col-md-6 d-flex flex-column gap-1">
           <h1 class="product-title">One Life Graphic T-shirt</h1>
           <div class="rating d-flex align-items-center">
             <svg
@@ -83,7 +87,7 @@
             This graphic t-shirt which is perfect for any occasion. Crafted from
             a soft and breathable fabric, it offers superior comfort and style
           </div>
-          <div class="my-3 divider"></div>
+          <div class="my-2 my-md-3 divider"></div>
           <div class="color">
             <p>Select Colors</p>
             <div class="All-colors d-flex align-items-center gap-3">
@@ -105,7 +109,7 @@
               <div class="color-box" style="background-color: #31344f"></div>
             </div>
           </div>
-          <div class="my-3 divider"></div>
+          <div class="my-2 my-md-3 divider"></div>
           <div class="size">
             <p>Select Size</p>
             <div class="d-flex gap-3 flex-wrap">
@@ -115,18 +119,38 @@
               <button>X-Large</button>
             </div>
           </div>
-          <div class="my-3 divider"></div>
-          <div class="AddCart row">
+          <div class="my-2 my-md-3 divider"></div>
+          <div class="AddCart row px-3 px-md-0">
             <div
-              class="counter col-4 d-flex justify-content-between align-items-center"
+              class="counter col-4 d-flex mb-3 mx-auto justify-content-between align-items-center"
             >
               <span class="minus">-</span>
               <p class="m-0 p-0">1</p>
               <span class="plus">+</span>
             </div>
-            <div class="col-8">
+            <div class="col-12 col-sm-8">
               <button class="AddToCart">Add To Cart</button>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="reviews mt-5">
+        <ProductReview />
+      </div>
+      <div class="alsoLike">
+        <SectionHeader title="YOU MIGHT ALSO LIKE" position="center" />
+        <div class="row all-Product">
+          <div class="col-6 col-md-4 col-lg-3">
+            <ProductCard />
+          </div>
+          <div class="col-6 col-md-4 col-lg-3">
+            <ProductCard />
+          </div>
+          <div class="col-6 col-md-4 col-lg-3">
+            <ProductCard />
+          </div>
+          <div class="col-6 col-md-4 col-lg-3">
+            <ProductCard />
           </div>
         </div>
       </div>
@@ -134,6 +158,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import ProductReview from "../components/Product/ProductReview.vue";
+import ProductCard from "../components/util/ProductCard.vue";
+import SectionHeader from "../components/util/SectionHeader.vue";
+
 defineProps<{ ProdId: string }>();
 </script>
 
@@ -141,6 +169,24 @@ defineProps<{ ProdId: string }>();
 section {
   padding: 30px 0 70px;
 }
+.img-box {
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.all-Product {
+  margin-top: 70px;
+}
+img {
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  max-height: 500px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
 .direction {
   color: #00000099;
   font-weight: 400;
@@ -297,6 +343,9 @@ button:hover {
 
   .AddCart .counter {
     padding: 0 30px;
+  }
+  .all-Product {
+    margin-top: 40px;
   }
 }
 </style>
