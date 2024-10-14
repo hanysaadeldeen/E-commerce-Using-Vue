@@ -4,7 +4,9 @@
       <p class="direction">Home > Cart</p>
       <SectionHeader title="YOUR CART" position="right" />
       <div class="cart row gap-4">
-        <div class="col-12 col-lg-6 Items"></div>
+        <div class="col-12 col-lg-6 Items">
+          <ProductCart />
+        </div>
         <div class="col-12 col-lg-5 Order">
           <h1 class="mb-4">Order Summary</h1>
           <div
@@ -81,6 +83,7 @@
 </template>
 
 <script setup lang="ts">
+import ProductCart from "../components/Product/ProductCart.vue";
 import SectionHeader from "../components/util/SectionHeader.vue";
 
 // import { storeToRefs } from "pinia";
