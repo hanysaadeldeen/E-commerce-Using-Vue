@@ -31,7 +31,7 @@
               />
             </svg>
           </div>
-          <div class="latest d-flex align-items-center gap-4">
+          <div class="latest d-none d-md-flex align-items-center gap-4">
             <p class="mb-1">Latest</p>
             <svg
               width="12"
@@ -46,8 +46,7 @@
               />
             </svg>
           </div>
-
-          <button class="Add-comment">Write a Review</button>
+          <BaseButton black title="Write a Review" />
         </div>
       </div>
       <div class="my-4 reviewCard">
@@ -72,7 +71,7 @@
           </div>
         </div>
         <div class="text-center">
-          <BaseButton title="Load More Reviews" />
+          <BaseButton margin white full title="Load More Reviews" />
         </div>
       </div>
     </div>
@@ -114,30 +113,7 @@ import ReviewCard from "../util/ReviewCard.vue";
   padding: 10px 30px;
   border-radius: 50px;
 }
-button {
-  color: #00000099;
-  background: #f0f0f0;
-  border-radius: 50px;
-  padding: 12px 30px;
-  border: 1px solid black;
-  cursor: pointer;
-}
 
-button:hover {
-  background: black;
-  color: white;
-  transition: 0.5s;
-}
-.Add-comment {
-  background: black;
-  color: white;
-}
-
-.Add-comment:hover {
-  background: #f0f0f0;
-  color: black;
-  border: 1px solid black;
-}
 @media (max-width: 797px) {
   .header .col {
     font-size: 16px;
@@ -148,9 +124,6 @@ button:hover {
     line-height: 27px;
   }
   .reviewSection span {
-    font-size: 14px;
-  }
-  button {
     font-size: 14px;
   }
 }

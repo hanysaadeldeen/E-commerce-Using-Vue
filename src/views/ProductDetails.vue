@@ -112,24 +112,45 @@
           <div class="my-2 my-md-3 divider"></div>
           <div class="size">
             <p>Select Size</p>
-            <div class="d-flex gap-3 flex-wrap">
-              <button>Small</button>
-              <button>Medium</button>
-              <button>Large</button>
-              <button>X-Large</button>
+            <div class="d-flex gap-2 flex-wrap">
+              <BaseButton
+                title="Small"
+                white
+                :width="'fit-content'"
+                :height="'48px'"
+              />
+              <BaseButton
+                title="Medium"
+                white
+                :width="'fit-content'"
+                :height="'48px'"
+              />
+              <BaseButton
+                title="Large"
+                white
+                :width="'fit-content'"
+                :height="'48px'"
+              />
+              <BaseButton
+                title="X-Large"
+                white
+                :width="'fit-content'"
+                :height="'48px'"
+              />
             </div>
           </div>
-          <div class="my-2 my-md-3 divider"></div>
+          <div class="my-3 divider"></div>
           <div class="AddCart row px-3 px-md-0">
-            <div
-              class="counter col-4 d-flex mb-3 mx-auto justify-content-between align-items-center"
-            >
-              <span class="minus">-</span>
-              <p class="m-0 p-0">1</p>
-              <span class="plus">+</span>
+            <div class="mb-3 mb-sm-0 col-6 col-lg-4 mx-auto">
+              <BaseCounter />
             </div>
-            <div class="col-12 col-sm-8">
-              <button class="AddToCart">Add To Cart</button>
+            <div class="col-12 col-sm-6 col-lg-8">
+              <BaseButton
+                title="Add To Cart"
+                black
+                :width="'100%'"
+                :height="'48px'"
+              />
             </div>
           </div>
         </div>
@@ -159,6 +180,8 @@
 </template>
 <script setup lang="ts">
 import ProductReview from "../components/Product/ProductReview.vue";
+import BaseButton from "../components/util/BaseButton.vue";
+import BaseCounter from "../components/util/BaseCounter.vue";
 import ProductCard from "../components/util/ProductCard.vue";
 import SectionHeader from "../components/util/SectionHeader.vue";
 
@@ -277,51 +300,6 @@ img {
   font-weight: 400;
 }
 
-button {
-  color: #00000099;
-  background: #f0f0f0;
-  border-radius: 50px;
-  padding: 12px 30px;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background: black;
-  color: white;
-  transition: 0.4s;
-}
-
-.AddCart .counter {
-  color: #00000099;
-  background: #f0f0f0;
-  border-radius: 50px;
-  padding: 0px 20px;
-}
-
-.AddCart .counter p {
-  font-size: 23px;
-}
-
-.minus,
-.plus {
-  font-size: 30px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.AddToCart {
-  width: 100%;
-  background: black;
-  color: white;
-}
-
-.AddToCart:hover {
-  background: #f0f0f0;
-  color: black;
-  border: 1px solid black;
-}
-
 @media (max-width: 992px) {
   .product-title {
     font-size: 24px;
@@ -337,13 +315,6 @@ button:hover {
     font-size: 14px;
   }
 
-  button {
-    font-size: 14px;
-  }
-
-  .AddCart .counter {
-    padding: 0 30px;
-  }
   .all-Product {
     margin-top: 40px;
   }

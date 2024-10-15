@@ -94,7 +94,8 @@
             </svg>
           </router-link>
 
-          <router-link :to="{ name: 'Cart' }">
+          <router-link :to="{ name: 'Cart' }" class="position-relative">
+            <div class="position-absolute Item-number">6</div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -160,5 +161,17 @@ ul li,
   background: none;
   outline: none;
   width: 100%;
+}
+.Item-number {
+  background: red;
+  color: white;
+  text-align: center;
+  border: none;
+  border-radius: 50px;
+  width: 22px;
+  height: 22px;
+  left: 8px;
+  top: -10px;
+  line-height: 20px;
 }
 </style>

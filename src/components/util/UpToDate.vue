@@ -29,13 +29,20 @@
           </svg>
           <input type="search" placeholder="Enter your email address" />
         </div>
-        <button>Subscribe to Newsletter</button>
+        <BaseButton
+          title="Subscribe to Newsletter"
+          white
+          :width="'350px'"
+          :height="'48px'"
+          :full="true"
+        />
       </div>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
+import BaseButton from "./BaseButton.vue";
 import SectionHeader from "./SectionHeader.vue";
 </script>
 
@@ -80,24 +87,7 @@ section {
   outline: none;
   width: 100%;
 }
-button {
-  height: 48px;
-  width: 350px;
-  border-radius: 50px;
-  padding: 12px 30px;
-  text-align: center;
-  border: 1px solid #0000001a;
-  background: white;
-}
-
-button:hover {
-  background-color: black;
-  color: white;
-  border: 1px solid white;
-  transition: 0.4s;
-}
-@media (max-width: 797px) {
-  button,
+@media (max-width: 576px) {
   .search {
     width: 100%;
   }

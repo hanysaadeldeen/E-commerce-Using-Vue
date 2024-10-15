@@ -16,7 +16,14 @@
           <ProductCard />
         </div>
       </div>
-      <BaseButton title="View All" />
+      <BaseButton
+        title="View All"
+        :width="'210px'"
+        :height="'52px'"
+        white
+        margin
+        full
+      />
     </div>
   </section>
 </template>

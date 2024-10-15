@@ -9,7 +9,14 @@
             designed to bring out your individuality and cater to your sense of
             style.
           </p>
-          <button>Shop Now</button>
+          <BaseButton
+            title="Shop Now"
+            margin
+            black
+            full
+            :width="'210px'"
+            :height="'52px'"
+          />
           <div class="status d-flex mb-1 row px-4 px-sm-0">
             <div class="col-6 col-md-4">
               <h2>200+</h2>
@@ -33,7 +40,9 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import BaseButton from "../util/BaseButton.vue";
+</script>
 
 <style scoped>
 h1 {
@@ -46,23 +55,6 @@ h1 {
 img {
   width: 100%;
 }
-button {
-  width: 210px;
-  height: 52px;
-  color: white;
-  background: black;
-  border-radius: 50px;
-  padding: 12px 30px;
-  text-align: center;
-  margin: 15px 0 25px;
-}
-button:hover {
-  background-color: transparent;
-  color: black;
-  border: 1px solid black;
-  transition: 0.4s;
-}
-
 .status div p {
   margin: 0;
   color: #00000099;
@@ -94,9 +86,6 @@ button:hover {
   }
   .status div h2 {
     font-size: 35px;
-  }
-  button {
-    width: 100%;
   }
 }
 </style>
