@@ -1,9 +1,9 @@
 <template>
-  <div class="Product-Cart row">
-    <div class="img-box col-1">
+  <div class="Product-Cart d-flex gap-4">
+    <div class="img-box">
       <img src="../../assets/cart1.png" alt="cart" />
     </div>
-    <div class="d-flex justify-content-between col-9">
+    <div class="d-flex justify-content-between w-75 px-lg-0">
       <div class="info">
         <h1>Gradient Graphic T-shirt</h1>
         <p class="m-0">Size: <span> Large</span></p>
@@ -26,16 +26,21 @@
             d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"
           />
         </svg>
+        <div class="counter d-flex justify-content-between align-items-center">
+          <span class="minus">-</span>
+          <p class="m-0 p-0">1</p>
+          <span class="plus">+</span>
+        </div>
       </div>
     </div>
   </div>
+  <div class="my-4 divider"></div>
 </template>
 
 <script setup></script>
 
 <style scoped>
 .Product-Cart {
-  height: 125px;
   width: 100%;
 }
 .img-box {
@@ -64,5 +69,39 @@ img {
   font-size: 24px;
   font-weight: 700;
   color: #000000;
+}
+.control svg {
+  color: #ff3333;
+  cursor: pointer;
+}
+.divider {
+  height: 1px;
+  background-color: #0000001a;
+  width: 100%;
+}
+
+.counter {
+  color: #00000099;
+  background: #f0f0f0;
+  border-radius: 50px;
+  padding: 0px 20px;
+  width: 128px;
+  height: 44px;
+}
+
+.counter p {
+  font-size: 23px;
+}
+.minus,
+.plus {
+  font-size: 30px;
+  cursor: pointer;
+  text-align: center;
+}
+
+@media (max-width: 992px) {
+  .counter {
+    padding: 0 30px;
+  }
 }
 </style>

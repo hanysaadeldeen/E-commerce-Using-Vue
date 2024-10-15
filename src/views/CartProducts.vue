@@ -1,13 +1,16 @@
 <template>
-  <div class="container">
+  <div class="container px-4 px-sm-0">
     <section>
-      <p class="direction">Home > Cart</p>
-      <SectionHeader title="YOUR CART" position="right" />
-      <div class="cart row gap-4">
-        <div class="col-12 col-lg-6 Items">
+      <p class="direction ps-2 ps-lg-0">Home > Cart</p>
+      <SectionHeader class="ps-2 ps-lg-0" title="YOUR CART" position="right" />
+      <div
+        class="mt-4 d-flex justify-content-between align-items-start flex-column flex-lg-row gap-4"
+      >
+        <div class="col-lg-7 col-12 gap-4 Items">
+          <ProductCart />
           <ProductCart />
         </div>
-        <div class="col-12 col-lg-5 Order">
+        <div class="col-lg-5 col-12 Order">
           <h1 class="mb-4">Order Summary</h1>
           <div
             class="subtotal d-flex justify-content-between align-items-center m-0 p-0"
@@ -96,20 +99,18 @@ import SectionHeader from "../components/util/SectionHeader.vue";
 
 <style scoped>
 section {
-  padding: 30px 0 70px;
+  padding: 30px 0px 70px;
 }
 .direction {
   color: #00000099;
   font-weight: 400;
-}
-.cart {
-  margin-top: 30px;
 }
 .Items,
 .Order {
   padding: 20px 24px;
   border: 1px solid #0000001a;
   border-radius: 20px;
+  height: fit-content;
 }
 .Order h1 {
   font-size: 24px;
