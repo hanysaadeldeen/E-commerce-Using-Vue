@@ -2,7 +2,8 @@
   <div class="w-100">
     <router-link :to="{ name: 'Details', params: { ProdId: 123 } }">
       <div class="card-img">
-        <img src="../../assets/prod1.png" alt="product1" />
+        <img :src="product.image" alt="product1" />
+        <!-- ../../assets/product2.png -->
       </div>
     </router-link>
     <div class="card-body py-4 d-flex flex-column gap-2">
@@ -72,7 +73,13 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+interface Product {
+  image: string;
+}
+
+defineProps<{ product: Product }>();
+</script>
 
 <style scoped>
 .card-img {

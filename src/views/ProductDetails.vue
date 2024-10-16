@@ -160,18 +160,22 @@
       </div>
       <div class="alsoLike">
         <SectionHeader title="YOU MIGHT ALSO LIKE" position="center" />
-        <div class="row all-Product">
-          <div class="col-6 col-md-4 col-lg-3">
-            <ProductCard />
-          </div>
-          <div class="col-6 col-md-4 col-lg-3">
-            <ProductCard />
-          </div>
-          <div class="col-6 col-md-4 col-lg-3">
-            <ProductCard />
-          </div>
-          <div class="col-6 col-md-4 col-lg-3">
-            <ProductCard />
+        <div class="row">
+          <div class="col-12 all-Product">
+            <swiper
+              space-between="30"
+              :breakpoints="{
+                400: { slidesPerView: 1 },
+                450: { slidesPerView: 2 },
+                640: { slidesPerView: 2 },
+                768: { slidesPerView: 3 },
+                1024: { slidesPerView: 4 },
+              }"
+            >
+              <swiper-slide v-for="(product, index) in products" :key="index">
+                <ProductCard :product="product" />
+              </swiper-slide>
+            </swiper>
           </div>
         </div>
       </div>
@@ -184,8 +188,26 @@ import BaseButton from "../components/util/BaseButton.vue";
 import BaseCounter from "../components/util/BaseCounter.vue";
 import ProductCard from "../components/util/ProductCard.vue";
 import SectionHeader from "../components/util/SectionHeader.vue";
-
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 defineProps<{ ProdId: string }>();
+interface Product {
+  image: string;
+}
+
+const products: Product[] = [
+  { image: "/src/assets/prod1.png" },
+  { image: "/src/assets/product2.png" },
+  { image: "/src/assets/product3.png" },
+  { image: "/src/assets/prod1.png" },
+  { image: "/src/assets/product2.png" },
+  { image: "/src/assets/product3.png" },
+  { image: "/src/assets/prod1.png" },
+  { image: "/src/assets/product2.png" },
+  { image: "/src/assets/product3.png" },
+];
 </script>
 
 <style scoped>

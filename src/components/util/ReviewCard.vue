@@ -90,7 +90,6 @@
 </template>
 
 <script setup lang="ts"></script>
-
 <style scoped>
 .border {
   border: 1px solid #0000001a;
