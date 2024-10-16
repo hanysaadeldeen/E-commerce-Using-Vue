@@ -18,6 +18,7 @@ interface Props {
   margin?: boolean;
   full?: boolean;
 }
+
 defineProps<Props>();
 </script>
 

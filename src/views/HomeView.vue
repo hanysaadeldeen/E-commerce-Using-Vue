@@ -1,14 +1,15 @@
 <template>
   <HeaderSection />
   <BrandsSection />
-  <NewArrivals />
+  <NewArrivals :Allproducts="products" />
   <Divider />
-  <TopSelling />
+  <TopSelling :Allproducts="products" />
   <DressStyle />
   <ReviewsSection />
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import BrandsSection from "../components/home/BrandsSection.vue";
 import DressStyle from "../components/home/DressStyle.vue";
 import HeaderSection from "../components/home/HeaderSection.vue";
@@ -16,6 +17,17 @@ import NewArrivals from "../components/home/NewArrivals.vue";
 import ReviewsSection from "../components/home/ReviewsSection.vue";
 import TopSelling from "../components/home/TopSelling.vue";
 import Divider from "../components/util/Divider.vue";
+import Store from "../Store/Store";
+import { onMounted } from "vue";
+
+const store = Store();
+
+const { fetchLimitedProducts } = Store();
+const { products } = storeToRefs(store);
+
+onMounted(() => {
+  fetchLimitedProducts();
+});
 </script>
 
 <style scoped>

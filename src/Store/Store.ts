@@ -1,23 +1,66 @@
 import { defineStore } from "pinia";
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 
 interface Products {
-  name: string;
-  age: number;
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
 }
 
 const Store = defineStore("Products", () => {
-  const products = reactive<Products[]>([
-    { name: "hany", age: 55 },
-    { name: "mohamed", age: 55 },
-    { name: "saad", age: 88 },
-  ]);
+  const products = reactive<Products[]>([]);
+  const specificProductItem = ref<Products>();
+  const Loading = ref<boolean>(false);
 
-  const Cart = ref<number>(50);
+  const numberProduct = ref<number>(10);
+
+  const fetchLimitedProducts = async () => {
+    products.length = 0;
+    try {
+      const response = await fetch(
+        `https://fakestoreapi.com/products?limit=${numberProduct.value}`
+      );
+      const data = await response.json();
+      products.push(...data);
+    } catch (error) {
+      console.log("fetch limited Product Error: ", error);
+    }
+  };
+
+  const specificProduct = async (prodId: string) => {
+    Loading.value = true;
+    await fetchLimitedProducts();
+    if (products.length > 0) {
+      const productItem = products.find((item) => item.id === +prodId);
+      if (productItem) {
+        specificProductItem.value = productItem;
+        Loading.value = false;
+      } else {
+        console.log(`Product with ID ${prodId} not found`);
+      }
+    } else {
+      console.log("Products array is empty");
+      Loading.value = false;
+    }
+  };
+
+  watch(numberProduct, () => {
+    fetchLimitedProducts();
+  });
 
   return {
+    fetchLimitedProducts,
+    specificProduct,
+    specificProductItem,
     products,
-    Cart,
+    Loading,
   };
 });
 

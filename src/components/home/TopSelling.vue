@@ -14,8 +14,11 @@
               1024: { slidesPerView: 4 },
             }"
           >
-            <swiper-slide v-for="(product, index) in products" :key="index">
-              <ProductCard :product="product" />
+            <swiper-slide
+              v-for="(product, index) in Allproducts"
+              :key="product.id"
+            >
+              <ProductCard :product="product" :index="index" />
             </swiper-slide>
           </swiper>
         </div>
@@ -41,21 +44,19 @@ import BaseButton from "../util/BaseButton.vue";
 import ProductCard from "../util/ProductCard.vue";
 import SectionHeader from "../util/SectionHeader.vue";
 
-interface Product {
+interface ProductsType {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
   image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
 }
-
-const products: Product[] = [
-  { image: "/src/assets/prod1.png" },
-  { image: "/src/assets/product2.png" },
-  { image: "/src/assets/product3.png" },
-  { image: "/src/assets/prod1.png" },
-  { image: "/src/assets/product2.png" },
-  { image: "/src/assets/product3.png" },
-  { image: "/src/assets/prod1.png" },
-  { image: "/src/assets/product2.png" },
-  { image: "/src/assets/product3.png" },
-];
+defineProps<{ Allproducts: ProductsType[] }>();
 </script>
 
 <style scoped>

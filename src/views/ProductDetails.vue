@@ -5,61 +5,28 @@
       <div class="product row">
         <div class="col-12 col-md-6 mb-5">
           <div class="img-box">
-            <img src="../assets/product1.png" alt="product1" />
+            <img :src="specificProductItem?.image" alt="product1" />
           </div>
         </div>
         <div class="col-12 col-md-6 d-flex flex-column gap-1">
-          <h1 class="product-title">One Life Graphic T-shirt</h1>
+          <h1 class="product-title">{{ specificProductItem?.title }}</h1>
           <div class="rating d-flex align-items-center">
+            <template v-for="_ in fullStar" :key="_">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                fill="currentColor"
+                class="bi bi-star-fill text-warning mx-1"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
+                />
+              </svg>
+            </template>
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              fill="currentColor"
-              class="bi bi-star-fill text-warning mx-1"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
-              />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              fill="currentColor"
-              class="bi bi-star-fill text-warning mx-1"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
-              />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              fill="currentColor"
-              class="bi bi-star-fill text-warning mx-1"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
-              />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              fill="currentColor"
-              class="bi bi-star-fill text-warning mx-1"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
-              />
-            </svg>
-            <svg
+              v-if="halfStar"
               xmlns="http://www.w3.org/2000/svg"
               width="18"
               height="18"
@@ -73,19 +40,24 @@
             </svg>
 
             <p class="my-0 mx-2">
-              4.5/ <span class="text-body-secondary"> 5</span>
+              {{ specificProductItem?.rating.rate }}/
+              <span class="text-body-secondary"> 5</span>
             </p>
           </div>
           <div class="price d-flex align-items-center gap-2">
-            <p class="current m-0">$260</p>
+            <p class="current m-0">${{ specificProductItem?.price }}</p>
             <p class="past m-0">
-              <del>$232</del>
+              <del
+                >${{
+                  specificProductItem &&
+                  (specificProductItem.price * 0.89).toFixed(2)
+                }}</del
+              >
             </p>
             <p class="discount m-0">-20%</p>
           </div>
           <div class="description">
-            This graphic t-shirt which is perfect for any occasion. Crafted from
-            a soft and breathable fabric, it offers superior comfort and style
+            {{ specificProductItem?.description }}
           </div>
           <div class="my-2 my-md-3 divider"></div>
           <div class="color">
@@ -172,8 +144,11 @@
                 1024: { slidesPerView: 4 },
               }"
             >
-              <swiper-slide v-for="(product, index) in products" :key="index">
-                <ProductCard :product="product" />
+              <swiper-slide
+                v-for="(product, index) in products"
+                :key="product.id"
+              >
+                <ProductCard :product="product" :index="index" />
               </swiper-slide>
             </swiper>
           </div>
@@ -192,22 +167,28 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-defineProps<{ ProdId: string }>();
-interface Product {
-  image: string;
-}
+import Store from "../Store/Store";
+import { storeToRefs } from "pinia";
+import { onMounted, ref } from "vue";
+const props = defineProps<{ ProdId: string }>();
 
-const products: Product[] = [
-  { image: "/src/assets/prod1.png" },
-  { image: "/src/assets/product2.png" },
-  { image: "/src/assets/product3.png" },
-  { image: "/src/assets/prod1.png" },
-  { image: "/src/assets/product2.png" },
-  { image: "/src/assets/product3.png" },
-  { image: "/src/assets/prod1.png" },
-  { image: "/src/assets/product2.png" },
-  { image: "/src/assets/product3.png" },
-];
+const store = Store();
+
+const { specificProduct } = Store();
+const { products, specificProductItem, Loading } = storeToRefs(store);
+const fullStar = ref<number | null>(
+  !Loading.value
+    ? Math.floor(specificProductItem.value?.rating.rate || 0)
+    : null
+);
+const halfStar = ref(
+  !Loading.value && specificProductItem.value
+    ? specificProductItem.value.rating.rate % 1 !== 0
+    : undefined
+);
+onMounted(() => {
+  specificProduct(props.ProdId);
+});
 </script>
 
 <style scoped>
