@@ -90,13 +90,6 @@
 import ProductCart from "../components/Product/ProductCart.vue";
 import BaseButton from "../components/util/BaseButton.vue";
 import SectionHeader from "../components/util/SectionHeader.vue";
-
-// import { storeToRefs } from "pinia";
-// import Store from "../Store/Store";
-
-// const store = Store();
-// const { products } = Store();
-// const { Cart } = storeToRefs(store);
 </script>
 
 <style scoped>

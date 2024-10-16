@@ -37,7 +37,7 @@
   <div class="my-4 divider"></div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import BaseCounter from "../util/BaseCounter.vue";
 </script>
 
