@@ -189,6 +189,7 @@ const AllSizes: { name: string }[] = [
     name: "X-Large",
   },
 ];
+
 const ChangeColor = ref<string>("");
 const ChangeSize = ref<string>("");
 const ProductCount = ref<number>(1);

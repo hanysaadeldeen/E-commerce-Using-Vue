@@ -29,7 +29,11 @@
           />
         </svg>
         <div class="w-100">
-          <BaseCounter />
+          <BaseCounter
+            :count="ProductCount"
+            @increase-by="(n) => (ProductCount += n)"
+            @decrease-by="(n) => ProductCount > 1 && (ProductCount -= n)"
+          />
         </div>
       </div>
     </div>
@@ -38,7 +42,9 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import BaseCounter from "../util/BaseCounter.vue";
+const ProductCount = ref<number>(1);
 </script>
 
 <style scoped>
