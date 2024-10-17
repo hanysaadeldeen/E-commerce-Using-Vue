@@ -149,7 +149,7 @@
               }"
             >
               <swiper-slide
-                v-for="(product, index) in products"
+                v-for="(product, index) in products.slice(0, 5)"
                 :key="product.id"
               >
                 <ProductCard :product="product" :index="index" />
@@ -221,8 +221,6 @@ const AddToCart = () => {
     count: ProductCount.value,
   };
 
-  console.log([prevProducts]);
-
   if (prevProducts) {
     const hasPrevProduct = prevProducts.find(
       (product) => product.id === newProduct.id
@@ -245,6 +243,13 @@ const AddToCart = () => {
     localStorage.setItem("Products", JSON.stringify([newProduct]));
   }
 };
+watch(
+  () => props.ProdId,
+  (newId) => {
+    specificProduct(newId);
+    ProductCount.value = 1;
+  }
+);
 
 onMounted(() => {
   specificProduct(props.ProdId);

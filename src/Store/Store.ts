@@ -42,11 +42,8 @@ const Store = defineStore("Products", () => {
       if (productItem) {
         specificProductItem.value = productItem;
         Loading.value = false;
-      } else {
-        console.log(`Product with ID ${prodId} not found`);
       }
     } else {
-      console.log("Products array is empty");
       Loading.value = false;
     }
   };
