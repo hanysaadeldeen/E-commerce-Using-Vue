@@ -136,7 +136,7 @@ img {
   width: 100%;
   max-height: 100%;
   border-radius: 20px;
-  object-fit: cover;
+  object-fit: contain;
 }
 .title {
   font-size: 20px;

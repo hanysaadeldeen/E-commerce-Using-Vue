@@ -1,9 +1,24 @@
 <template>
   <div class="px-3 px-md-0">
     <div class="row header mb-4">
-      <div class="col text-center">Product Details</div>
-      <div class="col text-center">Rating & Reviews</div>
-      <div class="col text-center">FAQs</div>
+      <div
+        :class="['col text-center', ReviewType === 'productCheck' && 'active']"
+        @click="ReviewType = 'productCheck'"
+      >
+        Product Details
+      </div>
+      <div
+        :class="['col text-center', ReviewType === 'Rating' && 'active']"
+        @click="ReviewType = 'Rating'"
+      >
+        Rating & Reviews
+      </div>
+      <div
+        :class="['col text-center', ReviewType === 'FAQs' && 'active']"
+        @click="ReviewType = 'FAQs'"
+      >
+        FAQs
+      </div>
     </div>
     <div class="reviewSection">
       <div class="row">
@@ -79,8 +94,11 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import BaseButton from "../util/BaseButton.vue";
 import ReviewCard from "../util/ReviewCard.vue";
+
+const ReviewType = ref("Rating");
 </script>
 
 <style scoped>
@@ -97,6 +115,10 @@ import ReviewCard from "../util/ReviewCard.vue";
 }
 .header .col:hover {
   color: black;
+  border-bottom: 2px solid black;
+}
+.active {
+  color: black !important;
   border-bottom: 2px solid black;
 }
 .reviewSection .h3 {

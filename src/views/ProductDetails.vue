@@ -63,58 +63,58 @@
           <div class="color">
             <p>Select Colors</p>
             <div class="All-colors d-flex align-items-center gap-3">
-              <div class="color-box" style="background-color: #4f4631">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-check2"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"
-                  />
-                </svg>
-              </div>
-              <div class="color-box" style="background-color: #314f4a"></div>
-              <div class="color-box" style="background-color: #31344f"></div>
+              <div
+                :class="[
+                  'color-box ',
+                  ChangeColor === '#4f4631' ? 'active' : '',
+                ]"
+                class="position-relative"
+                @click="ChangeColor = '#4f4631'"
+                style="background-color: #4f4631"
+              ></div>
+              <div
+                class="position-relative"
+                :class="[
+                  'color-box ',
+                  ChangeColor === '#314f4a' ? 'active' : '',
+                ]"
+                @click="ChangeColor = '#314f4a'"
+                style="background-color: #314f4a"
+              ></div>
+              <div
+                class="position-relative"
+                :class="[
+                  'color-box ',
+                  ChangeColor === '#31344f' ? 'active' : '',
+                ]"
+                @click="ChangeColor = '#31344f'"
+                style="background-color: #31344f"
+              ></div>
             </div>
           </div>
           <div class="my-2 my-md-3 divider"></div>
           <div class="size">
             <p>Select Size</p>
             <div class="d-flex gap-2 flex-wrap">
-              <BaseButton
-                title="Small"
-                white
-                :width="'fit-content'"
-                :height="'48px'"
-              />
-              <BaseButton
-                title="Medium"
-                white
-                :width="'fit-content'"
-                :height="'48px'"
-              />
-              <BaseButton
-                title="Large"
-                white
-                :width="'fit-content'"
-                :height="'48px'"
-              />
-              <BaseButton
-                title="X-Large"
-                white
-                :width="'fit-content'"
-                :height="'48px'"
-              />
+              <template v-for="size in AllSizes" :key="size.name">
+                <BaseButton
+                  :title="size.name"
+                  :width="'fit-content'"
+                  :height="'48px'"
+                  :class="[ChangeSize === size.name ? 'black' : 'white']"
+                  @click="ChangeSize = size.name"
+                />
+              </template>
             </div>
           </div>
           <div class="my-3 divider"></div>
           <div class="AddCart row px-3 px-md-0">
             <div class="mb-3 mb-sm-0 col-6 col-lg-4 mx-auto">
-              <BaseCounter />
+              <BaseCounter
+                :count="ProductCount"
+                @increase-by="(n) => (ProductCount += n)"
+                @decrease-by="(n) => ProductCount > 1 && (ProductCount -= n)"
+              />
             </div>
             <div class="col-12 col-sm-6 col-lg-8">
               <BaseButton
@@ -171,7 +171,23 @@ import Store from "../Store/Store";
 import { storeToRefs } from "pinia";
 import { onMounted, ref, watch } from "vue";
 const props = defineProps<{ ProdId: string }>();
-
+const AllSizes: { name: string }[] = [
+  {
+    name: "Small",
+  },
+  {
+    name: "Medium",
+  },
+  {
+    name: "Large",
+  },
+  {
+    name: "X-Large",
+  },
+];
+const ChangeColor = ref<string>("");
+const ChangeSize = ref<string>("");
+const ProductCount = ref<number>(1);
 const store = Store();
 
 const { specificProduct } = Store();
@@ -292,13 +308,13 @@ img {
   align-items: center;
   justify-content: center;
 }
-
-.color-box svg {
+.color-box.active::before {
+  content: "\2713";
+  position: absolute;
   color: white;
-  border-radius: 50px;
-  width: 20px;
-  height: 20px;
-  padding: 0;
+  font-size: 18px;
+  z-index: 2;
+  font-weight: 700;
 }
 
 .size p {
