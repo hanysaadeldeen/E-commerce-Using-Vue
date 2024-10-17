@@ -23,9 +23,9 @@ const router = createRouter({
   routes,
   scrollBehavior(_, __, savedPosition) {
     if (savedPosition) {
-      return savedPosition; // Preserve scroll position when using browser navigation
+      return savedPosition;
     } else {
-      return { top: 0 }; // Scroll to the top on route change
+      return { top: 0 };
     }
   },
 });

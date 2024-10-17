@@ -197,7 +197,8 @@ const ProductCount = ref<number>(1);
 const store = Store();
 
 const { specificProduct } = Store();
-const { products, specificProductItem, Loading } = storeToRefs(store);
+const { products, specificProductItem, Loading, cartCount } =
+  storeToRefs(store);
 
 var fullStar = ref(0);
 var halfStar = ref<boolean | false>(false);
@@ -210,17 +211,14 @@ watch(Loading, () => {
       : false
   );
 });
-
 const AddToCart = () => {
   const prevProducts: { id: number; count: number }[] | null = JSON.parse(
     localStorage.getItem("Products") || "null"
   );
-
   const newProduct = {
     id: specificProductItem.value?.id,
     count: ProductCount.value,
   };
-
   if (prevProducts) {
     const hasPrevProduct = prevProducts.find(
       (product) => product.id === newProduct.id
@@ -235,12 +233,17 @@ const AddToCart = () => {
       hasPrevProduct.count = updatedCount;
       removeProductFilter.push(hasPrevProduct);
       localStorage.setItem("Products", JSON.stringify(removeProductFilter));
+      const AllNumber = JSON.parse(localStorage.getItem("Products") || "null");
+      cartCount.value = AllNumber.length;
     } else {
       const updateProducts = [...prevProducts, newProduct];
       localStorage.setItem("Products", JSON.stringify(updateProducts));
+      const AllNumber = JSON.parse(localStorage.getItem("Products") || "null");
+      cartCount.value = AllNumber.length;
     }
   } else {
     localStorage.setItem("Products", JSON.stringify([newProduct]));
+    cartCount.value += 1;
   }
 };
 watch(
@@ -250,6 +253,10 @@ watch(
     ProductCount.value = 1;
   }
 );
+const AllNumber = JSON.parse(localStorage.getItem("Products") || "null");
+if (AllNumber) {
+  cartCount.value = AllNumber.length;
+}
 
 onMounted(() => {
   specificProduct(props.ProdId);

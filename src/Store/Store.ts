@@ -18,8 +18,9 @@ const Store = defineStore("Products", () => {
   const products = reactive<Products[]>([]);
   const specificProductItem = ref<Products>();
   const Loading = ref<boolean>(false);
-
   const numberProduct = ref<number>(10);
+
+  const cartCount = ref<number>(0);
 
   const fetchLimitedProducts = async () => {
     products.length = 0;
@@ -58,6 +59,7 @@ const Store = defineStore("Products", () => {
     specificProductItem,
     products,
     Loading,
+    cartCount,
   };
 });
 

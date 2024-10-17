@@ -95,7 +95,7 @@
           </router-link>
 
           <router-link :to="{ name: 'Cart' }" class="position-relative">
-            <div class="position-absolute Item-number">6</div>
+            <div class="position-absolute Item-number">{{ cartCount }}</div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -131,7 +131,13 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import Store from "../../Store/Store";
+
+const store = Store();
+const { cartCount } = storeToRefs(store);
+</script>
 
 <style scoped>
 .NavBar {
