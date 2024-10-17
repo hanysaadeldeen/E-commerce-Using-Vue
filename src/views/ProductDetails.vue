@@ -5,7 +5,10 @@
       <div class="product row">
         <div class="col-12 col-md-6 mb-5">
           <div class="img-box">
-            <img :src="specificProductItem?.image" alt="product1" />
+            <img
+              :src="specificProductItem?.image"
+              v-bind:alt="specificProductItem?.title"
+            />
           </div>
         </div>
         <div class="col-12 col-md-6 d-flex flex-column gap-1">
@@ -122,13 +125,14 @@
                 black
                 :width="'100%'"
                 :height="'48px'"
+                @click="AddToCart"
               />
             </div>
           </div>
         </div>
       </div>
       <div class="reviews mt-5">
-        <ProductReview />
+        <ProductReview :reviewCount="specificProductItem?.rating.count" />
       </div>
       <div class="alsoLike">
         <SectionHeader title="YOU MIGHT ALSO LIKE" position="center" />
@@ -188,6 +192,7 @@ const AllSizes: { name: string }[] = [
 const ChangeColor = ref<string>("");
 const ChangeSize = ref<string>("");
 const ProductCount = ref<number>(1);
+
 const store = Store();
 
 const { specificProduct } = Store();
@@ -204,6 +209,41 @@ watch(Loading, () => {
       : false
   );
 });
+
+const AddToCart = () => {
+  const prevProducts: { id: number; count: number }[] | null = JSON.parse(
+    localStorage.getItem("Products") || "null"
+  );
+
+  const newProduct = {
+    id: specificProductItem.value?.id,
+    count: ProductCount.value,
+  };
+
+  console.log([prevProducts]);
+
+  if (prevProducts) {
+    const hasPrevProduct = prevProducts.find(
+      (product) => product.id === newProduct.id
+    );
+
+    const removeProductFilter = prevProducts.filter(
+      (product) => product.id !== newProduct.id
+    );
+
+    if (hasPrevProduct) {
+      const updatedCount = hasPrevProduct?.count + ProductCount.value;
+      hasPrevProduct.count = updatedCount;
+      removeProductFilter.push(hasPrevProduct);
+      localStorage.setItem("Products", JSON.stringify(removeProductFilter));
+    } else {
+      const updateProducts = [...prevProducts, newProduct];
+      localStorage.setItem("Products", JSON.stringify(updateProducts));
+    }
+  } else {
+    localStorage.setItem("Products", JSON.stringify([newProduct]));
+  }
+};
 
 onMounted(() => {
   specificProduct(props.ProdId);

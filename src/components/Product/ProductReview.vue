@@ -26,7 +26,7 @@
           class="col-12 mb-3 mb-md-0 col-md-4 gap-md-3 d-flex align-items-center flex-column flex-md-row gap-0 justify-content-start"
         >
           <h3 class="m-0">All Reviews</h3>
-          <span>(523)</span>
+          <span>({{ reviewCount }})</span>
         </div>
         <div
           class="col-12 col-md-8 d-flex justify-content-md-end justify-content-center align-items-center gap-3"
@@ -66,27 +66,22 @@
       </div>
       <div class="my-4 reviewCard">
         <div class="row">
-          <div class="col-12 col-md-6 my-2">
-            <ReviewCard />
-          </div>
-          <div class="col-12 col-md-6 my-2">
-            <ReviewCard />
-          </div>
-          <div class="col-12 col-md-6 my-2">
-            <ReviewCard />
-          </div>
-          <div class="col-12 col-md-6 my-2">
-            <ReviewCard />
-          </div>
-          <div class="col-12 col-md-6 my-2">
-            <ReviewCard />
-          </div>
-          <div class="col-12 col-md-6 my-2">
+          <div v-for="_ in numberReviews" class="col-12 col-md-6 my-2">
             <ReviewCard />
           </div>
         </div>
         <div class="text-center">
-          <BaseButton margin white full title="Load More Reviews" />
+          <BaseButton
+            margin
+            white
+            full
+            :title="
+              numberReviews === 8 ? 'Load Less Reviews' : 'Load More Reviews'
+            "
+            @click="
+              numberReviews < 8 ? (numberReviews = 8) : (numberReviews = 4)
+            "
+          />
         </div>
       </div>
     </div>
@@ -97,8 +92,9 @@
 import { ref } from "vue";
 import BaseButton from "../util/BaseButton.vue";
 import ReviewCard from "../util/ReviewCard.vue";
-
+defineProps<{ reviewCount: number | undefined }>();
 const ReviewType = ref("Rating");
+const numberReviews = ref<number>(4);
 </script>
 
 <style scoped>
