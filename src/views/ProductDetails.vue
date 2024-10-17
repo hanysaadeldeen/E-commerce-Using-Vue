@@ -169,23 +169,26 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Store from "../Store/Store";
 import { storeToRefs } from "pinia";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 const props = defineProps<{ ProdId: string }>();
 
 const store = Store();
 
 const { specificProduct } = Store();
 const { products, specificProductItem, Loading } = storeToRefs(store);
-const fullStar = ref<number | null>(
-  !Loading.value
-    ? Math.floor(specificProductItem.value?.rating.rate || 0)
-    : null
-);
-const halfStar = ref(
-  !Loading.value && specificProductItem.value
-    ? specificProductItem.value.rating.rate % 1 !== 0
-    : undefined
-);
+
+var fullStar = ref(0);
+var halfStar = ref<boolean | false>(false);
+
+watch(Loading, () => {
+  fullStar = ref(Math.floor(specificProductItem.value?.rating.rate || 0));
+  halfStar = ref<boolean | false>(
+    specificProductItem.value
+      ? specificProductItem.value.rating.rate % 1 !== 0
+      : false
+  );
+});
+
 onMounted(() => {
   specificProduct(props.ProdId);
 });
@@ -210,7 +213,7 @@ img {
   max-width: 500px;
   max-height: 500px;
   border-radius: 20px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .direction {

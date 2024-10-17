@@ -8,7 +8,7 @@
     <div class="card-body py-4 d-flex flex-column gap-2">
       <h1 class="title m-0">{{ title }}</h1>
       <div class="rating d-flex align-items-center">
-        <template v-for="_ in fullStars" :key="_">
+        <template v-for="_ in full" :key="_">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -24,7 +24,7 @@
         </template>
 
         <svg
-          v-if="hasHalfStar"
+          v-if="HalfStar"
           xmlns="http://www.w3.org/2000/svg"
           width="18"
           height="18"
@@ -100,6 +100,8 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+
 interface Product {
   id: number;
   title: string;
@@ -115,9 +117,8 @@ interface Product {
 
 const props = defineProps<{ product: Product; index: number }>();
 const { id, title, price, image, rating } = props.product;
-
-const fullStars = Math.floor(props.product.rating.rate);
-const hasHalfStar = props.product.rating.rate % 1 !== 0;
+const full = computed(() => Math.floor(rating.rate));
+const HalfStar = computed(() => rating.rate % 1 !== 0);
 </script>
 
 <style scoped>
