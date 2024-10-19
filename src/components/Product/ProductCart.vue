@@ -1,7 +1,9 @@
 <template>
   <div class="Product-Cart d-flex flex-wrap flex-sm-nowrap gap-4">
     <div class="img-box">
-      <img :src="image" alt="cart" />
+      <router-link :to="`/${id}`">
+        <img :src="image" alt="cart" />
+      </router-link>
     </div>
     <div
       class="content d-flex justify-content-between gap-o gap-md-4 w-100 w-sm-75 px-lg-0"
@@ -61,8 +63,18 @@ interface Products {
 const props = defineProps<{ data: Products; index: number }>();
 const { id, title, price, image } = props.data;
 
-console.log(props.data);
-console.log(props.index);
+const prevProducts: { id: number; count: number }[] | null = JSON.parse(
+  localStorage.getItem("Products") || "null"
+);
+
+if (prevProducts) {
+  const specificProduct = ref<{ id: number; count: number } | undefined>(
+    prevProducts.find((product) => product.id === id)
+  );
+  if (specificProduct) {
+    ProductCount.value = specificProduct.value?.count || 1;
+  }
+}
 
 const deleteProduct = (prodId: number) => {
   console.log(prodId);

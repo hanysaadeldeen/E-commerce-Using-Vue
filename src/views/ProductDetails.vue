@@ -223,11 +223,9 @@ const AddToCart = () => {
     const hasPrevProduct = prevProducts.find(
       (product) => product.id === newProduct.id
     );
-
     const removeProductFilter = prevProducts.filter(
       (product) => product.id !== newProduct.id
     );
-
     if (hasPrevProduct) {
       const updatedCount = hasPrevProduct?.count + ProductCount.value;
       hasPrevProduct.count = updatedCount;

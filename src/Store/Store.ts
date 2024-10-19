@@ -19,8 +19,8 @@ const Store = defineStore("Products", () => {
   const specificProductItem = ref<Products>();
   const Loading = ref<boolean>(false);
   const numberProduct = ref<number>(10);
-
   const cartCount = ref<number>(0);
+  const filteredProducts = ref<Products[]>([]);
 
   const fetchLimitedProducts = async () => {
     products.length = 0;
@@ -48,7 +48,6 @@ const Store = defineStore("Products", () => {
       Loading.value = false;
     }
   };
-  const filteredProducts = ref<Products[]>([]);
 
   const fetchCartProducts = async () => {
     const storedProducts = ref(

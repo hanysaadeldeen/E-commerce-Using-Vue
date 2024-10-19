@@ -22,26 +22,26 @@
               class="subtotal d-flex justify-content-between align-items-center m-0 p-0"
             >
               <p>Subtotal</p>
-              <p>$565</p>
+              <p>${{ subTotal }}</p>
             </div>
             <div
               class="Discount d-flex justify-content-between align-items-center m-0 p-0"
             >
               <p>Discount (-20%)</p>
-              <p>$565</p>
+              <p>-${{ discount }}</p>
             </div>
             <div
               class="Delivery d-flex justify-content-between align-items-center m-0 p-0"
             >
               <p>Delivery Fee</p>
-              <p>$565</p>
+              <p>$15</p>
             </div>
             <div class="mb-3 divider"></div>
             <div
               class="Total d-flex justify-content-between align-items-center m-0 p-0"
             >
               <p>Total</p>
-              <p>$565</p>
+              <p>${{ totalMoney }}</p>
             </div>
             <div
               class="d-flex justify-content-between align-items-center gap-3"
@@ -92,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref, watch } from "vue";
 import ProductCart from "../components/Product/ProductCart.vue";
 import BaseButton from "../components/util/BaseButton.vue";
 import SectionHeader from "../components/util/SectionHeader.vue";
@@ -103,6 +103,24 @@ const store = Store();
 const { filteredProducts } = storeToRefs(store);
 
 const { fetchLimitedProducts, fetchCartProducts } = Store();
+const TotalArray = ref<number[]>();
+const subTotal = ref<number>();
+const discount = ref<number>();
+const totalMoney = ref<number>();
+
+watch(filteredProducts, () => {
+  if (filteredProducts.value) {
+    TotalArray.value = filteredProducts.value.map(
+      (product: { price: number }) => product.price
+    );
+
+    if (TotalArray) {
+      subTotal.value = TotalArray.value.reduce((pre, now) => pre + now, 0);
+      discount.value = +(subTotal.value * 0.2).toFixed(2);
+      totalMoney.value = +(subTotal.value - discount.value - 15).toFixed(2);
+    }
+  }
+});
 
 onMounted(() => {
   fetchLimitedProducts();
