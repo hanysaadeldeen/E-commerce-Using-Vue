@@ -253,10 +253,6 @@ watch(
     ProductCount.value = 1;
   }
 );
-const AllNumber = JSON.parse(localStorage.getItem("Products") || "null");
-if (AllNumber) {
-  cartCount.value = AllNumber.length;
-}
 
 onMounted(() => {
   specificProduct(props.ProdId);

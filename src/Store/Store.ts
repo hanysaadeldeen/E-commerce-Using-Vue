@@ -48,6 +48,29 @@ const Store = defineStore("Products", () => {
       Loading.value = false;
     }
   };
+  const filteredProducts = ref<Products[]>([]);
+
+  const fetchCartProducts = async () => {
+    const storedProducts = ref(
+      JSON.parse(localStorage.getItem("Products") || "null") || []
+    );
+
+    const storedProductIds = ref(
+      storedProducts.value &&
+        storedProducts.value.map((item: { id: number }) => item.id)
+    );
+
+    watch(
+      [products, storedProductIds],
+      ([newProducts, newStoredProductIds]) => {
+        if (newProducts.length > 0 && newStoredProductIds.length > 0) {
+          filteredProducts.value = products.filter((product) =>
+            storedProductIds.value.includes(product.id)
+          );
+        }
+      }
+    );
+  };
 
   watch(numberProduct, () => {
     fetchLimitedProducts();
@@ -60,6 +83,8 @@ const Store = defineStore("Products", () => {
     products,
     Loading,
     cartCount,
+    fetchCartProducts,
+    filteredProducts,
   };
 });
 

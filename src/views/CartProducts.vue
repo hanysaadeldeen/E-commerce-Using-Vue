@@ -6,8 +6,13 @@
       <div class="mt-4 row">
         <div class="col-lg-7 gap-4">
           <div class="Items">
-            <ProductCart />
-            <ProductCart />
+            <div
+              class="item"
+              v-for="(info, index) in filteredProducts"
+              :key="info.id"
+            >
+              <ProductCart :data="info" :index="index" />
+            </div>
           </div>
         </div>
         <div class="col-lg-5 mt-3 mt-lg-0">
@@ -87,9 +92,22 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import ProductCart from "../components/Product/ProductCart.vue";
 import BaseButton from "../components/util/BaseButton.vue";
 import SectionHeader from "../components/util/SectionHeader.vue";
+import Store from "../Store/Store";
+import { storeToRefs } from "pinia";
+
+const store = Store();
+const { filteredProducts } = storeToRefs(store);
+
+const { fetchLimitedProducts, fetchCartProducts } = Store();
+
+onMounted(() => {
+  fetchLimitedProducts();
+  fetchCartProducts();
+});
 </script>
 
 <style scoped>
@@ -106,6 +124,17 @@ section {
   border: 1px solid #0000001a;
   border-radius: 20px;
   height: fit-content;
+}
+.Items .item {
+  border-bottom: 2px solid #0000001a;
+  padding: 30px 0;
+}
+.Items .item:first-of-type {
+  padding: 0 0 30px 0;
+}
+.Items .item:last-of-type {
+  border: none;
+  padding: 30px 0 0;
 }
 .Order h1 {
   font-size: 24px;
