@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { reactive, ref, watch } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 
 interface Products {
   id: number;
@@ -65,33 +65,41 @@ const Store = defineStore("Products", () => {
 
   const storedIds = ref<number[]>([]);
 
+  const updateCartCount = () => {
+    const storedProducts = JSON.parse(localStorage.getItem("Products") || "[]");
+    cartCount.value = storedProducts.length;
+  };
+
   const fetchCartProducts = () => {
     const storedProducts = ref(
       JSON.parse(localStorage.getItem("Products") || "null") || []
     );
-
     if (storedProducts.value.length) {
       storedIds.value = storedProducts.value.map(
         (item: { id: number }) => item.id
       );
-
       if (products && storedIds.value.length) {
         filteredProducts.value = products.filter((product) =>
           storedIds.value.includes(product.id)
         );
-
         watch([products, storedIds], ([newProducts, newStoredProductIds]) => {
           if (newProducts.length > 0 && newStoredProductIds.length > 0) {
             filteredProducts.value = products.filter((product) =>
               storedIds.value.includes(product.id)
             );
+            updateCartCount();
           }
         });
       }
     } else {
       filteredProducts.value = [];
+      updateCartCount();
     }
   };
+
+  onMounted(() => {
+    updateCartCount();
+  });
 
   watch(numberProduct, () => {
     fetchLimitedProducts();

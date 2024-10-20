@@ -81,7 +81,6 @@ if (specificProduct) {
   ProductCount.value = specificProduct.value?.count || 1;
 }
 
-// Function to delete a product from localStorage
 const deleteProduct = (prodId: number) => {
   const storedProducts = JSON.parse(localStorage.getItem("Products") || "[]");
   if (storedProducts) {
@@ -96,25 +95,21 @@ const deleteProduct = (prodId: number) => {
 };
 
 watch(ProductCount, () => {
-  // Make sure prevProducts exists and is an array
-  if (Array.isArray(prevProducts.value)) {
-    // Find the current product and update its count
-    const currentProductIndex = prevProducts.value.findIndex(
-      (product) => product.id === id
+  const prevProducts = ref<{ id: number; count: number }[]>(
+    JSON.parse(localStorage.getItem("Products") || "[]")
+  );
+  if (prevProducts.value) {
+    const currentProduct = prevProducts.value.find(
+      (product: { id: number }) => product.id === id
     );
 
-    if (currentProductIndex !== -1) {
-      prevProducts.value[currentProductIndex].count = ProductCount.value; // Update count for the specific product
-    } else {
-      // If the product isn't found, add it to the array
-      prevProducts.value.push({ id, count: ProductCount.value });
+    if (currentProduct) {
+      currentProduct.count = ProductCount.value;
+      const updatedProducts = prevProducts.value.map((product) =>
+        product.id === id ? { ...product, count: ProductCount.value } : product
+      );
+      localStorage.setItem("Products", JSON.stringify(updatedProducts));
     }
-
-    // Log the current state of prevProducts
-    console.log("Updated prevProducts:", prevProducts.value);
-
-    // Persist the updated products list to localStorage
-    localStorage.setItem("Products", JSON.stringify(prevProducts.value));
   }
 });
 </script>

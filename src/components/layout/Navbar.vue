@@ -137,11 +137,6 @@ import Store from "../../Store/Store";
 
 const store = Store();
 const { cartCount } = storeToRefs(store);
-
-const AllNumber = JSON.parse(localStorage.getItem("Products") || "null");
-if (AllNumber) {
-  cartCount.value = AllNumber.length;
-}
 </script>
 
 <style scoped>

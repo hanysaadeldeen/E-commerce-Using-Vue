@@ -128,7 +128,7 @@ watch(filteredProducts, () => {
     if (TotalArray) {
       subTotal.value = TotalArray.value.reduce((pre, now) => pre + now, 0);
       discount.value = +(subTotal.value * 0.2).toFixed(2);
-      totalMoney.value = +(subTotal.value - discount.value - 15).toFixed(2);
+      totalMoney.value = +(subTotal.value - discount.value + 15).toFixed(2);
     }
   }
 });
