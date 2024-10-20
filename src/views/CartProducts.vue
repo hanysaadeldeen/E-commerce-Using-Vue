@@ -3,7 +3,10 @@
     <div class="container">
       <p class="direction ps-2 ps-lg-0">Home > Cart</p>
       <SectionHeader class="ps-2 ps-lg-0" title="YOUR CART" position="right" />
-      <div class="mt-4 row">
+      <div
+        v-if="filteredProducts && filteredProducts.length > 0"
+        class="mt-4 row"
+      >
         <div class="col-lg-7 gap-4">
           <div class="Items">
             <div
@@ -85,6 +88,14 @@
               </svg>
             </BaseButton>
           </div>
+        </div>
+      </div>
+      <div v-else class="mt-4">
+        <h2 class="text-center">Cart is Empty</h2>
+        <div class="text-center my-4">
+          <router-link to="/">
+            <BaseButton title="Back to Home" black full />
+          </router-link>
         </div>
       </div>
     </div>

@@ -6,25 +6,25 @@
         <div class="col-12 col-md-6 col-lg-5 mb-4">
           <div class="box-img">
             <img src="../../assets/style2.png" class="reverse" alt="style2" />
-            <span> Casual</span>
+            <span> {{ Category[0] }}</span>
           </div>
         </div>
         <div class="col-12 col-md-6 col-lg-7 mb-4">
           <div class="box-img">
             <img src="../../assets/style1.png" alt="style1" />
-            <span> Gym</span>
+            <span> {{ Category[1] }}</span>
           </div>
         </div>
         <div class="col-12 col-md-6 col-lg-7 mb-4 mb-md-0">
           <div class="box-img">
             <img src="../../assets/style3.png" alt="style1" />
-            <span>Party</span>
+            <span>{{ Category[2] }}</span>
           </div>
         </div>
         <div class="col-12 col-md-6 col-lg-5">
           <div class="box-img">
             <img src="../../assets/style4.png" class="reverse" alt="style2" />
-            <span>Formal</span>
+            <span>{{ Category[3] }}</span>
           </div>
         </div>
       </div>
@@ -33,7 +33,15 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import SectionHeader from "../util/SectionHeader.vue";
+import Store from "../../Store/Store";
+
+const { fetchCategory, Category } = Store();
+
+onMounted(() => {
+  fetchCategory();
+});
 </script>
 
 <style scoped>

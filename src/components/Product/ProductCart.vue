@@ -34,19 +34,22 @@
         <div class="w-100">
           <BaseCounter
             :count="ProductCount"
-            @increase-by="(n) => (ProductCount += n)"
-            @decrease-by="(n) => ProductCount > 1 && (ProductCount -= n)"
+            @increase-by="(n:number) => (ProductCount += n)"
+            @decrease-by="(n:number) => ProductCount > 1 && (ProductCount -= n)"
           />
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import Store from "../../Store/Store";
+// import { storeToRefs } from "pinia";
 import BaseCounter from "../util/BaseCounter.vue";
+
 const ProductCount = ref<number>(1);
+
 interface Products {
   id: number;
   title: string;
@@ -63,22 +66,57 @@ interface Products {
 const props = defineProps<{ data: Products; index: number }>();
 const { id, title, price, image } = props.data;
 
-const prevProducts: { id: number; count: number }[] | null = JSON.parse(
-  localStorage.getItem("Products") || "null"
+// const store = Store();
+const { fetchCartProducts } = Store();
+// const { storedProducts } = storeToRefs(store);
+
+const prevProducts = ref<{ id: number; count: number }[]>(
+  JSON.parse(localStorage.getItem("Products") || "[]")
 );
 
-if (prevProducts) {
-  const specificProduct = ref<{ id: number; count: number } | undefined>(
-    prevProducts.find((product) => product.id === id)
-  );
-  if (specificProduct) {
-    ProductCount.value = specificProduct.value?.count || 1;
-  }
+const specificProduct = ref(
+  prevProducts.value.find((product) => product.id === id)
+);
+if (specificProduct) {
+  ProductCount.value = specificProduct.value?.count || 1;
 }
 
+// Function to delete a product from localStorage
 const deleteProduct = (prodId: number) => {
-  console.log(prodId);
+  const storedProducts = JSON.parse(localStorage.getItem("Products") || "[]");
+  if (storedProducts) {
+    localStorage.setItem(
+      "Products",
+      JSON.stringify(
+        storedProducts.filter((item: { id: number }) => item.id !== prodId)
+      )
+    );
+    fetchCartProducts();
+  }
 };
+
+watch(ProductCount, () => {
+  // Make sure prevProducts exists and is an array
+  if (Array.isArray(prevProducts.value)) {
+    // Find the current product and update its count
+    const currentProductIndex = prevProducts.value.findIndex(
+      (product) => product.id === id
+    );
+
+    if (currentProductIndex !== -1) {
+      prevProducts.value[currentProductIndex].count = ProductCount.value; // Update count for the specific product
+    } else {
+      // If the product isn't found, add it to the array
+      prevProducts.value.push({ id, count: ProductCount.value });
+    }
+
+    // Log the current state of prevProducts
+    console.log("Updated prevProducts:", prevProducts.value);
+
+    // Persist the updated products list to localStorage
+    localStorage.setItem("Products", JSON.stringify(prevProducts.value));
+  }
+});
 </script>
 
 <style scoped>

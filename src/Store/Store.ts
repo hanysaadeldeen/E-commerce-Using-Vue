@@ -20,6 +20,8 @@ const Store = defineStore("Products", () => {
   const Loading = ref<boolean>(false);
   const numberProduct = ref<number>(10);
   const cartCount = ref<number>(0);
+  const Category = reactive<string[]>([]);
+
   const filteredProducts = ref<Products[]>([]);
 
   const fetchLimitedProducts = async () => {
@@ -49,26 +51,46 @@ const Store = defineStore("Products", () => {
     }
   };
 
-  const fetchCartProducts = async () => {
+  const fetchCategory = async () => {
+    try {
+      const response = await fetch(
+        "https://fakestoreapi.com/products/categories"
+      );
+      const res = await response.json();
+      Category.push(...res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const storedIds = ref<number[]>([]);
+
+  const fetchCartProducts = () => {
     const storedProducts = ref(
       JSON.parse(localStorage.getItem("Products") || "null") || []
     );
 
-    const storedProductIds = ref(
-      storedProducts.value &&
-        storedProducts.value.map((item: { id: number }) => item.id)
-    );
+    if (storedProducts.value.length) {
+      storedIds.value = storedProducts.value.map(
+        (item: { id: number }) => item.id
+      );
 
-    watch(
-      [products, storedProductIds],
-      ([newProducts, newStoredProductIds]) => {
-        if (newProducts.length > 0 && newStoredProductIds.length > 0) {
-          filteredProducts.value = products.filter((product) =>
-            storedProductIds.value.includes(product.id)
-          );
-        }
+      if (products && storedIds.value.length) {
+        filteredProducts.value = products.filter((product) =>
+          storedIds.value.includes(product.id)
+        );
+
+        watch([products, storedIds], ([newProducts, newStoredProductIds]) => {
+          if (newProducts.length > 0 && newStoredProductIds.length > 0) {
+            filteredProducts.value = products.filter((product) =>
+              storedIds.value.includes(product.id)
+            );
+          }
+        });
       }
-    );
+    } else {
+      filteredProducts.value = [];
+    }
   };
 
   watch(numberProduct, () => {
@@ -84,6 +106,8 @@ const Store = defineStore("Products", () => {
     cartCount,
     fetchCartProducts,
     filteredProducts,
+    fetchCategory,
+    Category,
   };
 });
 
