@@ -104,7 +104,7 @@
                   :title="size.name"
                   :width="'fit-content'"
                   :height="'48px'"
-                  :class="[ChangeSize === size.name ? 'black' : 'white']"
+                  :class="[ChangeSize === size.name ? 'activeButton' : '']"
                   @click="ChangeSize = size.name"
                 />
               </template>
@@ -175,6 +175,7 @@ import Store from "../Store/Store";
 import { storeToRefs } from "pinia";
 import { onMounted, ref, watch } from "vue";
 const props = defineProps<{ ProdId: string }>();
+
 const AllSizes: { name: string }[] = [
   {
     name: "Small",
@@ -190,27 +191,31 @@ const AllSizes: { name: string }[] = [
   },
 ];
 
-const ChangeColor = ref<string>("");
-const ChangeSize = ref<string>("");
+const ChangeColor = ref<string>("#314f4a");
+const ChangeSize = ref<string>("Small");
 const ProductCount = ref<number>(1);
 
 const store = Store();
 
-const { specificProduct } = Store();
-const { products, specificProductItem, Loading, cartCount } =
-  storeToRefs(store);
+const { specificProduct, updateCartCount } = Store();
+const { products, specificProductItem, Loading } = storeToRefs(store);
 
 var fullStar = ref(0);
 var halfStar = ref<boolean | false>(false);
 
+// this watch for make sure the product is loaded and display the rating
 watch(Loading, () => {
-  fullStar = ref(Math.floor(specificProductItem.value?.rating.rate || 0));
-  halfStar = ref<boolean | false>(
-    specificProductItem.value
-      ? specificProductItem.value.rating.rate % 1 !== 0
-      : false
+  fullStar = ref<number>(
+    Math.floor(specificProductItem.value?.rating.rate || 0)
+  );
+  halfStar = ref<boolean>(
+    (specificProductItem.value &&
+      specificProductItem.value.rating.rate % 1 !== 0) ||
+      false
   );
 });
+
+// Add Product to Cart
 const AddToCart = () => {
   const prevProducts: { id: number; count: number }[] | null = JSON.parse(
     localStorage.getItem("Products") || "null"
@@ -231,19 +236,18 @@ const AddToCart = () => {
       hasPrevProduct.count = updatedCount;
       removeProductFilter.push(hasPrevProduct);
       localStorage.setItem("Products", JSON.stringify(removeProductFilter));
-      const AllNumber = JSON.parse(localStorage.getItem("Products") || "null");
-      cartCount.value = AllNumber.length;
+      updateCartCount();
     } else {
       const updateProducts = [...prevProducts, newProduct];
       localStorage.setItem("Products", JSON.stringify(updateProducts));
-      const AllNumber = JSON.parse(localStorage.getItem("Products") || "null");
-      cartCount.value = AllNumber.length;
+      updateCartCount();
     }
   } else {
     localStorage.setItem("Products", JSON.stringify([newProduct]));
-    cartCount.value += 1;
+    updateCartCount();
   }
 };
+
 watch(
   () => props.ProdId,
   (newId) => {
@@ -291,6 +295,12 @@ img {
 .product-title {
   font-size: 40px;
   font-weight: 700;
+}
+
+.activeButton {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
 }
 
 .rating svg {

@@ -27,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+defineEmits(["decreaseBy", "increaseBy"]);
 defineProps<{ count: number }>();
 </script>
 

@@ -24,12 +24,17 @@
         </div>
       </div>
       <BaseButton
-        title="View All"
+        :title="Allproducts.length > 15 ? 'View Less' : 'View More'"
         :width="'210px'"
         :height="'52px'"
         white
         margin
         :full="true"
+        @click="
+          UpdateDisplayProducts(
+            Allproducts.length > 15 ? 'decrease' : 'increase'
+          )
+        "
       />
     </div>
   </section>
@@ -43,6 +48,7 @@ import "swiper/css/pagination";
 import BaseButton from "../util/BaseButton.vue";
 import ProductCard from "../util/ProductCard.vue";
 import SectionHeader from "../util/SectionHeader.vue";
+import Store from "../../Store/Store";
 
 interface ProductsType {
   id: number;
@@ -57,6 +63,7 @@ interface ProductsType {
   };
 }
 defineProps<{ Allproducts: ProductsType[] }>();
+const { UpdateDisplayProducts } = Store();
 </script>
 
 <style scoped>

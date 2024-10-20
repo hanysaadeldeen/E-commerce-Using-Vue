@@ -18,12 +18,22 @@ const Store = defineStore("Products", () => {
   const products = reactive<Products[]>([]);
   const specificProductItem = ref<Products>();
   const Loading = ref<boolean>(false);
+  // how many products in the page
   const numberProduct = ref<number>(10);
+  // for number product in the navBar
   const cartCount = ref<number>(0);
+  // for DRESS STYLE section
   const Category = reactive<string[]>([]);
-
+  // subTotal discount totalMoney => for Order Summary section
+  const subTotal = ref<number>();
+  const discount = ref<number>();
+  const totalMoney = ref<number>();
+  // the products in the localStorage
   const filteredProducts = ref<Products[]>([]);
+  // ids for products in the localStorage
+  const storedIds = ref<number[]>([]);
 
+  // fetch Products by limit
   const fetchLimitedProducts = async () => {
     products.length = 0;
     try {
@@ -37,6 +47,7 @@ const Store = defineStore("Products", () => {
     }
   };
 
+  // get Specific Product for Product Details page
   const specificProduct = async (prodId: string) => {
     Loading.value = true;
     await fetchLimitedProducts();
@@ -51,6 +62,7 @@ const Store = defineStore("Products", () => {
     }
   };
 
+  // this fetch for DRESS STYLE section
   const fetchCategory = async () => {
     try {
       const response = await fetch(
@@ -63,17 +75,12 @@ const Store = defineStore("Products", () => {
     }
   };
 
-  const storedIds = ref<number[]>([]);
-
-  const updateCartCount = () => {
-    const storedProducts = JSON.parse(localStorage.getItem("Products") || "[]");
-    cartCount.value = storedProducts.length;
-  };
-
+  // for get products in the localStorage
   const fetchCartProducts = () => {
     const storedProducts = ref(
       JSON.parse(localStorage.getItem("Products") || "null") || []
     );
+
     if (storedProducts.value.length) {
       storedIds.value = storedProducts.value.map(
         (item: { id: number }) => item.id
@@ -82,14 +89,19 @@ const Store = defineStore("Products", () => {
         filteredProducts.value = products.filter((product) =>
           storedIds.value.includes(product.id)
         );
+
         watch([products, storedIds], ([newProducts, newStoredProductIds]) => {
           if (newProducts.length > 0 && newStoredProductIds.length > 0) {
             filteredProducts.value = products.filter((product) =>
               storedIds.value.includes(product.id)
             );
             updateCartCount();
+            updateOrder();
           }
         });
+
+        updateCartCount();
+        updateOrder();
       }
     } else {
       filteredProducts.value = [];
@@ -97,12 +109,60 @@ const Store = defineStore("Products", () => {
     }
   };
 
-  onMounted(() => {
-    updateCartCount();
-  });
+  // for money (Order Summary section)
+  const updateOrder = () => {
+    if (filteredProducts) {
+      const storedProducts = ref<{ id: number; count: number }[] | null>(
+        JSON.parse(localStorage.getItem("Products") || "null") || []
+      );
+
+      if (storedProducts.value && storedProducts.value.length > 0) {
+        const productTotals = filteredProducts.value.map(
+          (product: { id: number; price: number }) => {
+            const matchedProduct = storedProducts.value?.find(
+              (storedProduct) => storedProduct.id === product.id
+            );
+            const count = matchedProduct ? matchedProduct.count : 1;
+            return product.price * count;
+          }
+        );
+
+        if (productTotals.length > 0) {
+          subTotal.value = +productTotals
+            .reduce((pre, now) => pre + now, 0)
+            .toFixed(2);
+          discount.value = +(subTotal.value * 0.2).toFixed(2);
+          totalMoney.value = +(subTotal.value - discount.value + 15).toFixed(2);
+        }
+      }
+    }
+  };
+
+  // cart length => in the navBar
+  const updateCartCount = () => {
+    const storedProducts = JSON.parse(localStorage.getItem("Products") || "[]");
+    cartCount.value = storedProducts.length;
+  };
+
+  // how many products can Display on the page
+  const UpdateDisplayProducts = (type: string) => {
+    if (type === "increase") {
+      if (numberProduct.value < 20) {
+        numberProduct.value += 5;
+      }
+    } else {
+      if (numberProduct.value > 5) {
+        numberProduct.value -= 5;
+      }
+    }
+  };
 
   watch(numberProduct, () => {
     fetchLimitedProducts();
+  });
+
+  onMounted(() => {
+    updateCartCount();
   });
 
   return {
@@ -116,6 +176,12 @@ const Store = defineStore("Products", () => {
     filteredProducts,
     fetchCategory,
     Category,
+    subTotal,
+    discount,
+    totalMoney,
+    updateOrder,
+    UpdateDisplayProducts,
+    updateCartCount,
   };
 });
 

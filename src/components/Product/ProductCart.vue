@@ -34,8 +34,8 @@
         <div class="w-100">
           <BaseCounter
             :count="ProductCount"
-            @increase-by="(n:number) => (ProductCount += n)"
-            @decrease-by="(n:number) => ProductCount > 1 && (ProductCount -= n)"
+            @increase-by="updateQuantity('increase', 1)"
+            @decrease-by="updateQuantity('decrease', 1)"
           />
         </div>
       </div>
@@ -45,9 +45,9 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import Store from "../../Store/Store";
-// import { storeToRefs } from "pinia";
 import BaseCounter from "../util/BaseCounter.vue";
-
+// @increase-by="(n:number) => (ProductCount += n)"
+// @decrease-by="(n:number) => ProductCount > 1 && (ProductCount -= n)"
 const ProductCount = ref<number>(1);
 
 interface Products {
@@ -66,14 +66,11 @@ interface Products {
 const props = defineProps<{ data: Products; index: number }>();
 const { id, title, price, image } = props.data;
 
-// const store = Store();
-const { fetchCartProducts } = Store();
-// const { storedProducts } = storeToRefs(store);
+const { fetchCartProducts, updateOrder } = Store();
 
 const prevProducts = ref<{ id: number; count: number }[]>(
   JSON.parse(localStorage.getItem("Products") || "[]")
 );
-
 const specificProduct = ref(
   prevProducts.value.find((product) => product.id === id)
 );
@@ -94,6 +91,18 @@ const deleteProduct = (prodId: number) => {
   }
 };
 
+const updateQuantity = (type: string, num: number) => {
+  if (type === "increase") {
+    ProductCount.value += num;
+  } else if (type === "decrease") {
+    if (ProductCount.value <= 1) {
+      deleteProduct(id);
+    } else {
+      ProductCount.value -= num;
+    }
+  }
+};
+
 watch(ProductCount, () => {
   const prevProducts = ref<{ id: number; count: number }[]>(
     JSON.parse(localStorage.getItem("Products") || "[]")
@@ -110,6 +119,7 @@ watch(ProductCount, () => {
       );
       localStorage.setItem("Products", JSON.stringify(updatedProducts));
     }
+    updateOrder();
   }
 });
 </script>
@@ -150,11 +160,6 @@ img {
   color: #ff3333;
   cursor: pointer;
 }
-/* .divider {
-  height: 1px;
-  background-color: #0000001a;
-  width: 100%; */
-/* } */
 
 .content .info {
   width: 70%;

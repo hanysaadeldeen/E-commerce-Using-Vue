@@ -103,7 +103,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onMounted } from "vue";
 import ProductCart from "../components/Product/ProductCart.vue";
 import BaseButton from "../components/util/BaseButton.vue";
 import SectionHeader from "../components/util/SectionHeader.vue";
@@ -111,27 +111,9 @@ import Store from "../Store/Store";
 import { storeToRefs } from "pinia";
 
 const store = Store();
-const { filteredProducts } = storeToRefs(store);
+const { filteredProducts, subTotal, discount, totalMoney } = storeToRefs(store);
 
 const { fetchLimitedProducts, fetchCartProducts } = Store();
-const TotalArray = ref<number[]>();
-const subTotal = ref<number>();
-const discount = ref<number>();
-const totalMoney = ref<number>();
-
-watch(filteredProducts, () => {
-  if (filteredProducts.value) {
-    TotalArray.value = filteredProducts.value.map(
-      (product: { price: number }) => product.price
-    );
-
-    if (TotalArray) {
-      subTotal.value = TotalArray.value.reduce((pre, now) => pre + now, 0);
-      discount.value = +(subTotal.value * 0.2).toFixed(2);
-      totalMoney.value = +(subTotal.value - discount.value + 15).toFixed(2);
-    }
-  }
-});
 
 onMounted(() => {
   fetchLimitedProducts();
@@ -221,6 +203,15 @@ p:nth-child(1) {
     font-size: 20px;
     font-weight: 700;
     line-height: 27px;
+  }
+}
+@media (max-width: 576px) {
+  section {
+    padding: 15px 5px 70px;
+  }
+  .Items,
+  .Order {
+    padding: 15px 18px;
   }
 }
 </style>
